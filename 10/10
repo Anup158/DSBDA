@@ -1,0 +1,71 @@
+# Importing required libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+data = pd.read_csv('https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv')
+
+# Display first 5 rows
+print(data.head())
+
+# Summary statistics for numerical features
+print(data.describe())
+
+# Summary statistics for categorical features
+print(data.describe(include='object'))
+
+# Check for missing values
+print(data.isnull().sum())
+
+# Display data types of each feature
+print("\nThe features in the dataset are as follows:")
+print("1. Sepal length :", data['sepal_length'].dtype)
+print("2. Sepal width  :", data['sepal_width'].dtype)
+print("3. Petal length :", data['petal_length'].dtype)
+print("4. Petal width  :", data['petal_width'].dtype)
+print("5. Species      :", data['species'].dtype)
+
+# Histograms with KDE plots
+sns.histplot(x=data['sepal_length'], kde=True)
+plt.title("Sepal Length Distribution")
+plt.show()
+
+sns.histplot(x=data['sepal_width'], kde=True)
+plt.title("Sepal Width Distribution")
+plt.show()
+
+sns.histplot(x=data['petal_length'], kde=True)
+plt.title("Petal Length Distribution")
+plt.show()
+
+sns.histplot(x=data['petal_width'], kde=True)
+plt.title("Petal Width Distribution")
+plt.show()
+
+# Boxplots (Univariate)
+sns.boxplot(x=data['sepal_length'])
+plt.title("Boxplot of Sepal Length")
+plt.show()
+
+sns.boxplot(x=data['sepal_width'])
+plt.title("Boxplot of Sepal Width")
+plt.show()
+
+sns.boxplot(x=data['petal_length'])
+plt.title("Boxplot of Petal Length")
+plt.show()
+
+sns.boxplot(x=data['petal_width'])
+plt.title("Boxplot of Petal Width")
+plt.show()
+
+# Boxplots (Bivariate with species)
+sns.boxplot(x='sepal_length', y='species', data=data)
+plt.title("Sepal Length by Species")
+plt.show()
+
+sns.boxplot(x='petal_length', y='species', data=data)
+plt.title("Petal Length by Species")
+plt.show()
