@@ -1,0 +1,44 @@
+import pandas as pd
+
+# Load data
+df = pd.read_csv("data.csv")
+
+# Data types
+print(df.dtypes)
+
+# Descriptive statistics
+print(df.describe())
+
+# Grouping by Age
+print(df.groupby(by=['Age']).size())
+
+# Checking for missing values
+print(df.isna().sum())
+print(df.isnull())
+
+# Checking type of a string
+print(type("Age"))  # str
+print(type("BMI"))  # str
+
+# Converting 'Age' to float
+df['Age'] = df['Age'].astype(float)
+
+# Rechecking descriptive statistics
+print(df.describe())
+
+# Checking updated data types
+print(df.dtypes)
+
+# Sorting by Age (ascending and descending)
+print(df.sort_values('Age'))
+print(df.sort_values('Age', ascending=False))
+
+# Renaming the 'Age' column
+df = df.rename(columns={'Age': 'Year Old'})
+
+# Sorting by index
+print(df.sort_index())
+
+# Resetting the index
+df = df.reset_index()
+print(df)
