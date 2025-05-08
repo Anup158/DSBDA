@@ -79,3 +79,71 @@ scaler = MinMaxScaler()
 x_scaled = scaler.fit_transform(x)
 
 pd.DataFrame(x_scaled).describe()
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-------------------- Method 2 -----------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# Import required libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+
+# Load the dataset
+df = pd.read_csv('student2.csv')
+
+# ----------------------------------------
+# 1. Handling Missing Values & Inconsistencies
+# ----------------------------------------
+
+# Check for missing values
+print("Missing values per column:\n", df.isnull().sum())
+
+# Impute missing values based on appropriate strategies
+df['class'] = df['class'].fillna(df['class'].mode()[0])         # Mode for categorical
+df['marks'] = df['marks'].fillna(df['marks'].mean())            # Mean for numeric
+df['age'] = df['age'].fillna(df['age'].median())                # Median for numeric
+
+# Alternative techniques (if needed)
+# df = df.fillna(method='backfill')     # Backward fill
+# df = df.fillna(method='pad')          # Forward fill
+# df = df.dropna()                      # Drop rows with missing values
+
+# ----------------------------------------
+# 2. Detecting and Handling Outliers
+# ----------------------------------------
+
+# Boxplot to visually inspect outliers
+df.plot.box(title="Boxplot for detecting outliers")
+plt.show()
+
+# Example: Manually correcting an outlier based on visual inspection or domain knowledge
+print("Original value:", df.loc[6, 'marks'])
+df.loc[6, 'marks'] = 98.45
+print("Updated value:", df.loc[6, 'marks'])
+
+# Histogram to check distributions
+df['age'].plot.hist(title="Age Distribution", bins=10)
+plt.xlabel('Age')
+plt.show()
+
+df['marks'].plot.hist(title="Marks Distribution", bins=10)
+plt.xlabel('Marks')
+plt.show()
+
+# ----------------------------------------
+# 3. Data Transformation (Normalization)
+# ----------------------------------------
+
+# Select numeric features
+x = df[['age', 'marks']]
+
+# Apply Min-Max scaling
+scaler = MinMaxScaler()
+x_scaled = scaler.fit_transform(x)
+
+# Convert scaled data back to DataFrame for readability
+scaled_df = pd.DataFrame(x_scaled, columns=['age_scaled', 'marks_scaled'])
+
+# Show summary statistics after scaling
+print("\nScaled data statistics:\n", scaled_df.describe())
+
